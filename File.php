@@ -29,6 +29,10 @@ class File
             throw new Exception('Does not possible find the file: ' . $this->pathWithFileName);
         }
         
+        if(!is_writeable($this->pathWithFileName)){
+            throw new Exception('The file is not writable: ' . $this->pathWithFileName);
+        }
+        
         $this->fileStream = fopen($this->pathWithFileName, 'a');
         if($this->fileStream == false){
             throw new Exception('Does not possible open the file: ' . $this->pathWithFileName);
@@ -44,6 +48,10 @@ class File
             throw new Exception('Does not possible find the file: ' . $this->pathWithFileName);
         }
         
+        if(!is_readable($this->pathWithFileName)){
+            throw new Exception('File is not readable: ' . $this->pathWithFileName);
+        }
+        
         return implode(null, file($this->pathWithFileName));
     }
     
@@ -53,6 +61,26 @@ class File
             throw new Exception('Does not possible find the file: ' . $this->pathWithFileName);
         }
         
+        if(!is_readable($this->pathWithFileName)){
+            throw new Exception('File is not readable: ' . $this->pathWithFileName);
+        }        
+        
         return file($this->pathWithFileName);
     }    
+    
+    public function delete()
+    {
+        if(!file_exists($this->pathWithFileName)){
+            throw new Exception('Does not possible find the file: ' . $this->pathWithFileName);
+        }
+        
+        if(!unlink($this->pathWithFileName)){
+            throw new Exception('Does not possible exclude the file: ' . $this->pathWithFileName);
+        }
+    }
+    
+    public function import()
+    {
+        return include($this->pathWithFileName);
+    }
 }

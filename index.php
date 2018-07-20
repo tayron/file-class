@@ -14,3 +14,15 @@ $file = new File('teste.txt');
 $file->create();
 $file->write($contentPHP);
 highlight_string(implode(null, $file->read()));
+$arquivoImportato = $file->import();
+
+echo '<pre>';
+var_dump($arquivoImportato);
+
+$pessoa = new Pessoa();
+$pessoa->setNome('Pedro');
+
+var_dump($pessoa);
+echo '</pre>';
+
+$file->delete();
